@@ -1,6 +1,7 @@
 package ru.netology.todos;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TodosTest {
@@ -36,15 +37,24 @@ public class TodosTest {
         assertEquals(3, found[0].getId());
     }
 
+
     @Test
     public void shouldFindMultipleMatches() {
         Todos todos = new Todos();
-        todos.add(new SimpleTask(1, "Отчёт по проекту"));
-        todos.add(new Meeting(2, "Обсуждение проекта", "Проект Y", "Сегодня"));
-        todos.add(new Epic(3, new String[]{"Задача по проекту", "Другая задача"}));
+        SimpleTask task1 = new SimpleTask(1, "Отчёт по проекту");
+        Meeting meeting2 = new Meeting(2, "Обсуждение проекта", "Проект Y", "Сегодня");
+        Epic epic3 = new Epic(3, new String[]{"Задача по проекту", "Другая задача"});
 
+
+        todos.add(task1);
+        todos.add(meeting2);
+        todos.add(epic3);
+
+        Task[] expected = new Task[]{task1, meeting2, epic3};  // Ожидаемый порядок
         Task[] found = todos.search("проект");
-        assertEquals(3, found.length);
+
+
+        assertArrayEquals(expected, found);  // Сравниваем массивы целиком
     }
 
     @Test
